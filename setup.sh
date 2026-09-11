@@ -24,8 +24,16 @@ fi
 # Install dependencies
 echo "Installing dependencies from requirements.txt..."
 "$VENV_NAME/bin/pip" install --upgrade pip
-"$VENV_NAME/bin/pip" install -r requirements.txt
+if ! "$VENV_NAME/bin/pip" install -r requirements.txt; then
+    echo "Standard install failed (often an 'externally managed environment' issue)."
+    echo "Retrying with --break-system-packages..."
+    "$VENV_NAME/bin/pip" install -r requirements.txt --break-system-packages
+fi
 
 echo ""
 echo "Setup complete. Activate the environment with:"
-echo "  source $VENV_NAME/bin/activate"
+echo "  source $VENV_NAME/bin/activate        (Mac/Linux)"
+echo "  $VENV_NAME\\Scripts\\activate           (Windows)"
+echo ""
+echo "Then run the pipeline with:"
+echo "  python run_pipeline_v7.3.py"
