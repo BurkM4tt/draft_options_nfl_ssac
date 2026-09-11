@@ -4,8 +4,12 @@ venv/
 .venv/
 
 # Runtime outputs
-data/
-figures/
+data/*
+!data/.gitkeep
+figures_all/*
+!figures_all/.gitkeep
+figures_for_paper/*
+!figures_for_paper/.gitkeep
 
 # Python
 __pycache__/
@@ -16,3 +20,6 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+
+# Logs
+*.log
