@@ -66,10 +66,3 @@ Sample filter: a pick enters the estimation sample if the player recorded at lea
 ## Why frozen inputs
 
 Upstream sources are revised. Between the v7.3 snapshot and 2026-09-30, one Over The Cap contract record changed and moved several headline numbers in a live run (see CHANGELOG, v8). Part 2 therefore reads only from `frozen_inputs/`, and `--fresh` is a deliberate, guarded refresh: the strike-anomaly guard rejects incomplete contract histories, and the abstract verification block catches anything else that moves.
-
-## Rebuilding the abstract
-
-```bash
-cd abstract
-pdflatex S01_Draft_as_Options_Abstract_SSAC_v8.tex
-```
