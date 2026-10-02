@@ -1,7 +1,37 @@
 """
 DRAFT PICKS AS OPTIONS -- PART 1: DATA EXTRACTION                  (v8)
 ========================================================================
-VERSION v8 
+VERSION v8 (2026-09-30). Successor to v7.3. Sample construction and the
+four-year AV panel are UNCHANGED. Three changes:
+
+  1. STRIKE-ANOMALY GUARD (root-cause fix for live-data drift).
+     A live re-run on 2026-09-30 found that Over The Cap's historical
+     contracts no longer carry a clean four-year rookie record for
+     2015 Pick 40 (Dorial Green-Beckham). The v7.3 fallback in
+     four_year_cost() then summed only the cap charges booked while he
+     was on the original team, giving $1.71M against ~$5.6M for his
+     slot neighbors. Because 2015 is the reference year, that single
+     cell produced a 4.0x moneyness spike at Pick 40, pulled the $/AV
+     rate to $0.387M, and (through max-normalization) moved the Johnson
+     mispricing correlation from -0.93 to -0.83.
+
+     v8 screens every contract whose four-year cost came from the
+     partial-history fallback (years != 4) against a log-interpolated
+     reference built ONLY from clean four-year records in the same
+     draft class. Anything below ANOMALY_RATIO (0.5) of that reference
+     is set to missing and log-interpolated like any other unobserved
+     cell. On current data this flags exactly one cell (2015 Pick 40,
+     ratio 0.30); the next-lowest of the 59 fallback contracts is 0.69,
+     so the threshold has wide margin on both sides. Flagged cells are
+     written to frozen_inputs/k_anomalies.csv, and more than
+     MAX_ANOMALIES flags is a hard failure (a large upstream change
+     should stop the run, not be silently absorbed).
+
+  2. FROZEN INPUTS. Outputs now go to ./frozen_inputs/ with a SHA-256
+     MANIFEST.md. Part 2 verifies the manifest before computing
+     anything. Raw downloads are cached in ./raw_cache/ (not committed).
+
+  3. Header and file naming updated to v8.
 
 Sole network-touching script. Downloads:
   draft_picks.csv              nflverse/nfldata       full draft history

@@ -1,7 +1,24 @@
 """
 DRAFT PICKS AS OPTIONS -- PART 2: ANALYTICS AND FIGURES               (v8)
 ========================================================================
-VERSION v8 
+VERSION v8 (2026-09-30). Successor to v7.3. Analysis sections [1]-[14]
+and the figure architecture are UNCHANGED from v7.3. Changes:
+
+  1. Reads exclusively from ./frozen_inputs/ (written by
+     01_data_extraction_v8.py) and verifies every file against
+     frozen_inputs/MANIFEST.md before computing anything. A checksum
+     mismatch is a hard failure.
+
+  2. HARD HEADLINE ASSERTS. v7.3 printed targets beside results but
+     only asserted loose bounds (e.g. $/AV in [0.35, 0.42]), which is how
+     a live run with one drifted contract passed silently at $0.387M /
+     r = -0.83. v8 asserts every number that appears in the SSAC27
+     abstract at the precision it is printed there (see
+     verify_abstract_numbers). Any mismatch fails the run and lists
+     every failing quantity.
+
+  3. Writes outputs/abstract_table1.csv: the six
+     positions shown in abstract Table 1, rounded exactly as displayed.
 
   Outputs:
     outputs/                  tables, logs, BS surface, abstract Table 1

@@ -1,0 +1,25 @@
+{
+  "n_sample": 1384,
+  "n_total_study": 1526,
+  "n_by_year": {
+    "2011": 231,
+    "2012": 232,
+    "2013": 230,
+    "2014": 226,
+    "2015": 228,
+    "2016": 237
+  },
+  "total_av4": 14568.0,
+  "k_anomalies": [
+    {
+      "draft_year": 2015,
+      "pick": 40,
+      "player": "Dorial Green-Beckham",
+      "k4_fallback": 1.709,
+      "k4_reference": 5.603,
+      "ratio": 0.305
+    }
+  ],
+  "k_cells_interpolated": 70,
+  "k_cells_total": 1536
+}
